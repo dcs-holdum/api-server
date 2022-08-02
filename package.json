@@ -1,0 +1,33 @@
+{
+  "name": "api-server",
+  "version": "1.0.0",
+  "description": "The API Server of DCS Holdum",
+  "main": "index.js",
+  "repository": "git@github.com:dcs-holdum/api-server.git",
+  "author": "craftz-cat<craftzcat.ss@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node build/init.js",
+    "build": "babel src -d build",
+    "dev": "nodemon"
+  },
+  "dependencies": {
+    "babel-loader": "^8.2.5",
+    "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "mongoose": "^6.5.0",
+    "morgan": "^1.10.0",
+    "node-fetch": "^3.2.10",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.10",
+    "@babel/node": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "nodemon": "^2.0.19"
+  }
+}
