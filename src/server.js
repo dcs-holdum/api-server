@@ -2,8 +2,12 @@ import express from "express";
 import morgan from "morgan";
 
 // Import Routers
+import attendanceRouter from "./routers/attendanceRouter";
+import gamblingRouter from "./routers/gamblingRouter";
+import levelRouter from "./routers/levelRouter";
+import moneyRouter from "./routers/moneyRouter";
 
-import session, { Store } from "express-session";
+import session from "express-session";
 import MongoStore from "connect-mongo";
 
 // Import Middlewares
@@ -33,7 +37,7 @@ app.use(
 )
 
 // Header Config
-app.use((req, res, next) => {
+app.use((_, res, next) => {
   res.header("Cross-Origin-Embedder-Policy", "require-corp");
   res.header("Cross-Origin-Opener-Policy", "same-origin");
   next();
@@ -41,5 +45,9 @@ app.use((req, res, next) => {
 
 // Routing
 app.use(localsMiddleware);
+app.use("/attendance", attendanceRouter);
+app.use("/gambling", gamblingRouter);
+app.use("/level", levelRouter);
+app.use("/money", moneyRouter);
 
 export default app;
