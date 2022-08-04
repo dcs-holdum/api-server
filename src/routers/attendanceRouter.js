@@ -7,7 +7,7 @@ const attendanceRouter = express.Router();
 
 // Routeing
 attendanceRouter.route("/").get(getAttendance);
-attendanceRouter.route("/check/:userId").get(getCheckAttendance);
-attendanceRouter.route("/stamp/:userId").post(postStampAttendance);
+attendanceRouter.route("/check/:username").get(getCheckAttendance);
+attendanceRouter.route("/stamp/:username").post(postStampAttendance);
 
 export default attendanceRouter;

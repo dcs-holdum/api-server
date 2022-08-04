@@ -7,8 +7,8 @@ const moneyRouter = express.Router();
 
 // Routeing
 moneyRouter.route("/").get(getMoney);
-moneyRouter.route("/check/:userId").get(getCheckMoney);
-moneyRouter.route("/earn/:userId").post(postEarnMoney);
-moneyRouter.route("/lose/:userId").post(postLoseMoney);
+moneyRouter.route("/check/:username").get(getCheckMoney);
+moneyRouter.route("/earn/:username").post(postEarnMoney);
+moneyRouter.route("/lose/:username").post(postLoseMoney);
 
 export default moneyRouter;

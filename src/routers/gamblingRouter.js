@@ -7,7 +7,7 @@ const gamblingRouter = express.Router();
 
 // Routeing
 gamblingRouter.route("/").get(getGabling);
-gamblingRouter.route("/check/:userId").get(getCheckGambling);
-gamblingRouter.route("/gambling/:money/:userId").post(postGambling);
+gamblingRouter.route("/check/:username").get(getCheckGambling);
+gamblingRouter.route("/gambling/:money/:username").post(postGambling);
 
 export default gamblingRouter;

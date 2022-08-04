@@ -7,7 +7,7 @@ const levelRouter = express.Router();
 
 // Routeing
 levelRouter.route("/").get(getLevel);
-levelRouter.route("/check/:userId").get(getCheckLevel);
-levelRouter.route("/up/:userId").post(postLevelUp);
+levelRouter.route("/check/:username").get(getCheckLevel);
+levelRouter.route("/up/:username").post(postLevelUp);
 
 export default levelRouter;
