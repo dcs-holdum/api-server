@@ -3,6 +3,7 @@ import morgan from "morgan";
 
 // Import Routers
 import rootRouter from "./routers/rootRouter";
+import userRouter from "./routers/userRouter";
 import attendanceRouter from "./routers/attendanceRouter";
 import gamblingRouter from "./routers/gamblingRouter";
 import levelRouter from "./routers/levelRouter";
@@ -47,6 +48,7 @@ app.use((_, res, next) => {
 // Routing
 app.use(localsMiddleware);
 app.use("/", rootRouter);
+app.use("/user", userRouter);
 app.use("/attendance", attendanceRouter);
 app.use("/gambling", gamblingRouter);
 app.use("/level", levelRouter);
