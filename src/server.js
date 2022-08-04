@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 
 // Import Routers
+import rootRouter from "./routers/rootRouter";
 import attendanceRouter from "./routers/attendanceRouter";
 import gamblingRouter from "./routers/gamblingRouter";
 import levelRouter from "./routers/levelRouter";
@@ -45,6 +46,7 @@ app.use((_, res, next) => {
 
 // Routing
 app.use(localsMiddleware);
+app.use("/", rootRouter);
 app.use("/attendance", attendanceRouter);
 app.use("/gambling", gamblingRouter);
 app.use("/level", levelRouter);
