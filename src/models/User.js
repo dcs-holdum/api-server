@@ -15,21 +15,15 @@ const userSchema = new mongoose.Schema({
   },
   level: {
     type: Number,
+    default: 1,
     min: 1,
     max: 10,
   },
   history: {
-    attendance: [{
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "AttendanceHistory",
-    }],
-    level: [{
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "LevelHistory",
-    }],
-  }
+    type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    ref: "History",
+  },
 });
 
 const User = mongoose.model("User", userSchema);
