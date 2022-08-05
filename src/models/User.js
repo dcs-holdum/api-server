@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: 0,
     min: 0,
-    max: 100000000000,
   },
   level: {
     type: Number,
@@ -21,7 +20,6 @@ const userSchema = new mongoose.Schema({
   },
   history: {
     type: mongoose.Schema.Types.ObjectId,
-    required: false,
     ref: "History",
   },
 });

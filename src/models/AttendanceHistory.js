@@ -4,6 +4,7 @@ const attendanceHistorySchema = new mongoose.Schema({
   time: {
     type: Date,
     required: true,
+    unique: true,
     default: Date.now,
   },
   streak: {
