@@ -8,9 +8,7 @@ export const getUser = async (req, res) => {
 
   const isExsits = await User.exists({ username });
 
-  if (!isExsits) {
-    return res.sendStatus(404);
-  }
+  if (!isExsits) return res.sendStatus(404);
 
   const foundedUser = await User.findById(isExsits["_id"]).populate("history");
 
@@ -26,9 +24,7 @@ export const postCreateUser = async (req, res) => {
 
   const isExsits = await User.exists({ username });
 
-  if (isExsits) {
-    return res.sendStatus(409);
-  }
+  if (isExsits) return res.sendStatus(409);
 
   try {
     const createdUser = await User.create({ username });
@@ -51,9 +47,7 @@ export const deleteUser = async (req, res) => {
 
   const isExsits = await User.exists({ username });
 
-  if (!isExsits) {
-    return res.sendStatus(404);
-  }
+  if (!isExsits) return res.sendStatus(404);
 
   try {
     const deletedUser = await User.findByIdAndDelete(isExsits["_id"]);
