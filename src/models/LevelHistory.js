@@ -6,16 +6,22 @@ const levelHistorySchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
+  spend: {
+    type: Number,
+    required: true,
+    min: 5000,
+    max: 5000 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2,
+  },
   from: {
     type: Number,
     required: true,
-    min: 1,
+    min: 0,
     max: 9,
   },
   to: {
     type: Number,
     required: true,
-    min: 2,
+    min: 1,
     max: 10,
   },
   success: {
