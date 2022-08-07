@@ -19,7 +19,7 @@ export const getUser = async (req, res) => {
 
 export const postCreateUser = async (req, res) => {
   const {
-    body: { username }
+    params: { username }
   } = req;
 
   const isExsits = await User.exists({ username });
@@ -42,7 +42,7 @@ export const postCreateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   const {
-    body: { username }
+    params: { username }
   } = req;
 
   const isExsits = await User.exists({ username });
@@ -50,10 +50,7 @@ export const deleteUser = async (req, res) => {
   if (!isExsits) return res.sendStatus(404);
 
   try {
-    const deletedUser = await User.findByIdAndDelete(isExsits["_id"]);
-
-    await History.findByIdAndDelete(deletedUser.history["_id"]);
-
+    await User.findByIdAndDelete(isExsits["_id"]);
     return res.sendStatus(204);
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
