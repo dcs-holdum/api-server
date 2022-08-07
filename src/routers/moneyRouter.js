@@ -1,7 +1,12 @@
 import express from "express";
 
 // Import Controllers and Middlewares
-import { getMoney, getCheckMoney, patchEarnMoney, patchLoseMoney } from "../controllers/moneyControllers";
+import {
+  getMoney,
+  getCheckMoney,
+  patchEarnMoney,
+  patchLoseMoney,
+} from "../controllers/moneyControllers";
 
 const moneyRouter = express.Router();
 

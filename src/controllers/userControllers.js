@@ -1,17 +1,17 @@
 // Import Models
 import User from "../models/User";
 import History from "../models/History";
+import { httpStatusCodes } from "../lib/https-status-codes";
 
 export const getUser = async (req, res) => {
   // Grab the variables from the params
   const {
-    params: { username }
+    params: { username },
   } = req;
-
 
   // Check user exists
   const isExsits = await User.exists({ username });
-  if (!isExsits) return res.sendStatus(404);
+  if (!isExsits) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   // If user exists, grab all of the user information from the mongoDB and populate history
   const foundedUser = await User.findById(isExsits["_id"]).populate("history");
@@ -19,19 +19,19 @@ export const getUser = async (req, res) => {
   // Return json
   // Ref) https://github.com/dcs-holdum/.github/blob/master/docs/API_EXAMPLE/USER/CHECK.json
   return res.json({
-    user: foundedUser
+    user: foundedUser,
   });
-}
+};
 
 export const postCreateUser = async (req, res) => {
   // Grab the variables from the params
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   // Check user exists
   const isExsits = await User.exists({ username });
-  if (isExsits) return res.sendStatus(409);
+  if (isExsits) return res.sendStatus(httpStatusCodes.CONFLICT);
 
   try {
     // Create the User
@@ -45,22 +45,24 @@ export const postCreateUser = async (req, res) => {
 
     // Return json
     // Ref) https://github.com/dcs-holdum/.github/blob/master/docs/API_EXAMPLE/USER/CREATE.json
-    return res.sendStatus(201);
+    return res.json({
+      created: true,
+    });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
-    return res.sendStatus(400);
+    return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
   }
 };
 
 export const deleteUser = async (req, res) => {
   // Grab the variables from the params
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   // Check user exists
   const isExsits = await User.exists({ username });
-  if (!isExsits) return res.sendStatus(404);
+  if (!isExsits) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   try {
     // Delete User
@@ -68,9 +70,11 @@ export const deleteUser = async (req, res) => {
 
     // Return json
     // Ref) https://github.com/dcs-holdum/.github/blob/master/docs/API_EXAMPLE/USER/DELETE.json
-    return res.sendStatus(204);
+    return res.json({
+      deleted: true,
+    });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
-    return res.sendStatus(400);
+    return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
   }
-}
+};

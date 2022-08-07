@@ -5,6 +5,7 @@ import AttendanceHistory from "../models/AttendanceHistory";
 
 // Import Libraries
 import { getLastElementOfArray } from "../lib/list";
+import { httpStatusCodes } from "../lib/https-status-codes";
 
 export const getAttendance = (req, res) => {
   return res.send("Developing... getAttendance");
@@ -13,19 +14,19 @@ export const getAttendance = (req, res) => {
 export const getCheckAttendance = async (req, res) => {
   // Grab the variable from the params
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   // Check user exists
   const isExists = await User.exists({ username });
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   // If user exists, grab all of the User information from the mongoDB and populate the attendance history array
   const userInfo = await User.findById(isExists["_id"]).populate({
     path: "history",
     populate: {
       path: "attendance",
-    }
+    },
   });
 
   // Check Date
@@ -49,24 +50,24 @@ export const getCheckAttendance = async (req, res) => {
   return res.json({
     today,
     history: userInfo.history.attendance.reverse(),
-  })
+  });
 };
 
 export const postStampAttendance = async (req, res) => {
   // Grab the variable from the params
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   // Check user exists
   const isExists = await User.exists({ username });
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   // If user exists, grab all of the User information from the mongoDB and populate the attendance history array
   const userInfo = await User.findById(isExists["_id"]).populate({
     path: "history",
     populate: {
-      path: "attendance"
+      path: "attendance",
     },
   });
 
@@ -80,21 +81,23 @@ export const postStampAttendance = async (req, res) => {
   if (!lastHistoryDate || currentDay !== lastHistoryDay) {
     try {
       // Create Stamp
-      const createdStamp = await AttendanceHistory.create({ user: isExists["_id"] });
+      const createdStamp = await AttendanceHistory.create({
+        user: isExists["_id"],
+      });
 
       // Push to history
       await History.findByIdAndUpdate(userInfo.history["_id"], {
         $push: {
           attendance: createdStamp["_id"],
-        }
+        },
       });
 
-      return res.sendStatus(201);
+      return res.sendStatus(httpStatusCodes.CREATED);
     } catch (error) {
       console.log(`SERVER_ERROR : ${error}`);
-      return res.sendStatus(400);
+      return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
     }
   } else {
-    return res.sendStatus(409);
+    return res.sendStatus(httpStatusCodes.CONFLICT);
   }
 };

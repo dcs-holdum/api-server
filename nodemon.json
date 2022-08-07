@@ -1,6 +1,4 @@
 {
-  "ignore": [
-    ""
-  ],
+  "ignore": [""],
   "exec": "babel-node src/init.js"
 }

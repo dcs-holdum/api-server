@@ -6,6 +6,7 @@ import LevelHistory from "../models/LevelHistory";
 // Import Libraries
 import { getNeed } from "../lib/level";
 import { getRandomBoolean } from "../lib/random";
+import { httpStatusCodes } from "../lib/https-status-codes";
 
 export const getLevel = (req, res) => {
   return res.send("Developing... getLevel");
@@ -14,19 +15,19 @@ export const getLevel = (req, res) => {
 export const getCheckLevel = async (req, res) => {
   // Grab the variable from the params
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   // Check user exists
   const isExists = await User.exists({ username });
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   // If user exists, grab all of the User information from the mongoDB and populate the level history array
   const userInfo = await User.findById(isExists["_id"]).populate({
     path: "history",
     populate: {
       path: "level",
-    }
+    },
   });
 
   // Return json
@@ -40,15 +41,15 @@ export const getCheckLevel = async (req, res) => {
 export const patchLevelUp = async (req, res) => {
   // Grab the variable from the params
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   // Check user exists
-  const isExist = await User.exists({ username });
-  if (!isExist) return res.sendStatus(404);
-
+  const isExists = await User.exists({ username });
+  if (!isExist) return res.sendStatus(httpStatusCodes.NOT_FOUND);
+  
   // If user exists, grab all of the User information from the mongoDB
-  const userInfo = await User.findById(isExist["_id"]);
+  const userInfo = await User.findById(isExists["_id"]);
 
   try {
     // Get need percentage and money
@@ -62,7 +63,7 @@ export const patchLevelUp = async (req, res) => {
       const currentMoney = userInfo.money;
 
       if (currentMoney < need.money) {
-        return res.sendStatus(403);
+        return res.sendStatus(httpStatusCodes.FORBIDDEN);
       } else {
         await userInfo.update({
           $inc: {
@@ -79,7 +80,7 @@ export const patchLevelUp = async (req, res) => {
       from: userInfo.level,
       to: userInfo.level + (isPossible ? 1 : 0),
       success: isPossible,
-      user: isExist["_id"],
+      user: isExists["_id"],
     });
 
     // Push to history
@@ -102,6 +103,6 @@ export const patchLevelUp = async (req, res) => {
     });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
-    return res.sendStatus(400);
+    return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
   }
 };
