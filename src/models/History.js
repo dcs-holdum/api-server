@@ -6,21 +6,27 @@ const historySchema = new mongoose.Schema({
     required: true,
     ref: "User",
   },
-  attendance: [{
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "AttendanceHistory",
-  }],
-  level: [{
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "LevelHistory",
-  }],
-  gambling: [{
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "GamblingHistory",
-  }],
+  attendance: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "AttendanceHistory",
+    },
+  ],
+  level: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "LevelHistory",
+    },
+  ],
+  gambling: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "GamblingHistory",
+    },
+  ],
 });
 
 const History = mongoose.model("History", historySchema);

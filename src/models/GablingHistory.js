@@ -33,5 +33,8 @@ const gamblingHistorySchema = new mongoose.Schema({
   },
 });
 
-const GamblingHistory = mongoose.model("GamblingHistory", gamblingHistorySchema);
+const GamblingHistory = mongoose.model(
+  "GamblingHistory",
+  gamblingHistorySchema
+);
 export default GamblingHistory;

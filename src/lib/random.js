@@ -1,10 +1,10 @@
 export function getRandomInteger(min, max, isIncluded) {
   return Math.floor(Math.random() * (max - min + (isIncluded ? 1 : 0))) + min;
-};
+}
 
 export function getRandomBoolean(percentage) {
   return Math.random() < percentage / 100;
-};
+}
 
 export function increaseByPercentage(minPercentage, money) {
   const percentage = getRandomInteger(1, minPercentage, true);
@@ -22,4 +22,4 @@ export function increaseByPercentage(minPercentage, money) {
     percentage,
     money: money * (increasePercentage / 100),
   };
-};
+}

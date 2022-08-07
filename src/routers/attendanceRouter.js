@@ -1,7 +1,11 @@
 import express from "express";
 
 // Import Controllers and Middlewares
-import { getAttendance, getCheckAttendance, postStampAttendance } from "../controllers/attendanceControllers";
+import {
+  getAttendance,
+  getCheckAttendance,
+  postStampAttendance,
+} from "../controllers/attendanceControllers";
 
 const attendanceRouter = express.Router();
 

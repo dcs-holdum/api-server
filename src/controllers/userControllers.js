@@ -3,7 +3,7 @@ import History from "../models/History";
 
 export const getUser = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExsits = await User.exists({ username });
@@ -13,13 +13,13 @@ export const getUser = async (req, res) => {
   const foundedUser = await User.findById(isExsits["_id"]).populate("history");
 
   return res.json({
-    user: foundedUser
+    user: foundedUser,
   });
-}
+};
 
 export const postCreateUser = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExsits = await User.exists({ username });
@@ -44,7 +44,7 @@ export const postCreateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExsits = await User.exists({ username });
@@ -60,4 +60,4 @@ export const deleteUser = async (req, res) => {
     console.log(`SERVER_ERROR : ${error}`);
     return res.sendStatus(400);
   }
-}
+};

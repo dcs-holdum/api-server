@@ -6,7 +6,7 @@ export const getMoney = (req, res) => {
 
 export const getCheckMoney = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExists = await User.exists({ username });
@@ -34,7 +34,7 @@ export const patchEarnMoney = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(isExists["_id"], {
       $inc: {
         money,
-      }
+      },
     });
 
     return res.json({
@@ -62,7 +62,7 @@ export const patchLoseMoney = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(isExists["_id"], {
       $inc: {
         money: -money,
-      }
+      },
     });
 
     return res.json({
