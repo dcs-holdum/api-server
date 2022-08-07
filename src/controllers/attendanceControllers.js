@@ -31,7 +31,7 @@ export const getCheckAttendance = async (req, res) => {
 
   let today = false;
 
-  if (!lastHistoryDate || currentDay - 1 === lastHistoryDay + 1) {
+  if (!lastHistoryDate || currentDay !== lastHistoryDay) {
     today = true;
   }
 
@@ -50,7 +50,7 @@ export const postStampAttendance = async (req, res) => {
 
   if (!isExists) return res.sendStatus(404);
 
-  const userInfo = await User.findById(isExists["_id"], { history: true }).populate({
+  const userInfo = await User.findById(isExists["_id"]).populate({
     path: "history",
     populate: {
       path: "attendance"
@@ -63,13 +63,13 @@ export const postStampAttendance = async (req, res) => {
   const lastHistoryDate = getLastElementOfArray(userInfo.history.attendance);
   const lastHistoryDay = lastHistoryDate?.time?.getDay() || -1;
 
-  if (!lastHistoryDate || currentDay - 1 > lastHistoryDay + 1) {
+  if (!lastHistoryDate || currentDay !== lastHistoryDay) {
     try {
       const createdStamp = await AttendanceHistory.create({ user: isExists["_id"] });
 
       await History.findByIdAndUpdate(userInfo.history["_id"], {
         $push: {
-          attendance: createdStamp,
+          attendance: createdStamp["_id"],
         }
       });
 
