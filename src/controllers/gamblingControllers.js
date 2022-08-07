@@ -9,7 +9,7 @@ export const getGabling = (_, res) => {
 
 export const getCheckGambling = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExists = await User.exists({ username });
@@ -30,7 +30,7 @@ export const getCheckGambling = async (req, res) => {
 
 export const postGambling = async (req, res) => {
   const {
-    params: { money: bettingMoney, username }
+    params: { money: bettingMoney, username },
   } = req;
 
   const isExists = await User.exists({ username });
@@ -43,7 +43,10 @@ export const postGambling = async (req, res) => {
     return res.sendStatus(403);
   }
 
-  const results = increaseByPercentage(process.env.MIN_PERCENTAGE, bettingMoney);
+  const results = increaseByPercentage(
+    process.env.MIN_PERCENTAGE,
+    bettingMoney
+  );
 
   await User.findByIdAndUpdate(userInfo["_id"], {
     $inc: {
@@ -70,5 +73,5 @@ export const postGambling = async (req, res) => {
     money: createdGamblingHistory.spend,
     earn: createdGamblingHistory.earn,
     percentage: createdGamblingHistory.percentage,
-  })
+  });
 };

@@ -10,7 +10,7 @@ export const getLevel = (req, res) => {
 
 export const getCheckLevel = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExists = await User.exists({ username });
@@ -21,7 +21,7 @@ export const getCheckLevel = async (req, res) => {
     path: "history",
     populate: {
       path: "level",
-    }
+    },
   });
 
   return res.json({
@@ -32,7 +32,7 @@ export const getCheckLevel = async (req, res) => {
 
 export const patchLevelUp = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExist = await User.exists({ username });

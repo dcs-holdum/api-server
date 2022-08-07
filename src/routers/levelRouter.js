@@ -1,7 +1,11 @@
 import express from "express";
 
 // Import Controllers and Middlewares
-import { getLevel, getCheckLevel, patchLevelUp } from "../controllers/levelControllers";
+import {
+  getLevel,
+  getCheckLevel,
+  patchLevelUp,
+} from "../controllers/levelControllers";
 
 const levelRouter = express.Router();
 

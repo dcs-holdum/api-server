@@ -6,7 +6,7 @@ export const getMoney = (req, res) => {
 
 export const getCheckMoney = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExists = await User.exists({ username });
@@ -18,7 +18,7 @@ export const getCheckMoney = async (req, res) => {
 
     return res.json({
       money: userInfo.money,
-    })
+    });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
     return res.sendStatus(400);
@@ -39,7 +39,7 @@ export const patchEarnMoney = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(isExists["_id"], {
       $inc: {
         money,
-      }
+      },
     });
 
     console.log(updatedUser);
@@ -64,7 +64,7 @@ export const patchLoseMoney = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(isExists["_id"], {
       $inc: {
         money: -money,
-      }
+      },
     });
 
     console.log(updatedUser);
