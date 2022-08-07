@@ -3,6 +3,7 @@ import History from "../models/History";
 import LevelHistory from "../models/LevelHistory";
 import { getNeed } from "../lib/level";
 import { getRandomBoolean } from "../lib/random";
+import { httpStatusCodes } from "../lib/https-status-codes";
 
 export const getLevel = (req, res) => {
   return res.send("Developing... getLevel");
@@ -15,7 +16,7 @@ export const getCheckLevel = async (req, res) => {
 
   const isExists = await User.exists({ username });
 
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   const userInfo = await User.findById(isExists["_id"]).populate({
     path: "history",
@@ -37,7 +38,7 @@ export const patchLevelUp = async (req, res) => {
 
   const isExist = await User.exists({ username });
 
-  if (!isExist) return res.sendStatus(404);
+  if (!isExist) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   const userInfo = await User.findById(isExist["_id"]);
 
@@ -49,7 +50,7 @@ export const patchLevelUp = async (req, res) => {
       const currentMoney = userInfo.money;
 
       if (currentMoney < need.money) {
-        return res.sendStatus(403);
+        return res.sendStatus(httpStatusCodes.FORBIDDEN);
       } else {
         await userInfo.update({
           $inc: {
@@ -85,6 +86,6 @@ export const patchLevelUp = async (req, res) => {
     });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
-    return res.sendStatus(400);
+    return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
   }
 };

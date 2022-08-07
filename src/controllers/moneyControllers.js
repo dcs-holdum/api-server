@@ -1,4 +1,5 @@
 import User from "../models/User";
+import { httpStatusCodes } from "../lib/https-status-codes";
 
 export const getMoney = (req, res) => {
   return res.send("Developing... getMoney");
@@ -11,7 +12,7 @@ export const getCheckMoney = async (req, res) => {
 
   const isExists = await User.exists({ username });
 
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   try {
     const userInfo = await User.findById(isExists["_id"], { money: true });
@@ -21,7 +22,7 @@ export const getCheckMoney = async (req, res) => {
     })
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
-    return res.sendStatus(400);
+    return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
   }
 };
 
@@ -33,7 +34,7 @@ export const patchEarnMoney = async (req, res) => {
 
   const isExists = await User.exists({ username });
 
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   try {
     const updatedUser = await User.findByIdAndUpdate(isExists["_id"], {
@@ -43,10 +44,14 @@ export const patchEarnMoney = async (req, res) => {
     });
 
     console.log(updatedUser);
-    return res.sendStatus(200);
+    return res.json({
+      past: updatedUser.money - money,
+      now: updatedUser.money,
+      request: money,
+    });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
-    return res.sendStatus(400);
+    return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
   }
 };
 
@@ -58,7 +63,7 @@ export const patchLoseMoney = async (req, res) => {
 
   const isExists = await User.exists({ username });
 
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   try {
     const updatedUser = await User.findByIdAndUpdate(isExists["_id"], {
@@ -68,9 +73,13 @@ export const patchLoseMoney = async (req, res) => {
     });
 
     console.log(updatedUser);
-    return res.sendStatus(200);
+    return res.json({
+      past: updatedUser.money - money,
+      now: updatedUser.money,
+      request: money,
+    });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
-    return res.sendStatus(400);
+    return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
   }
 };

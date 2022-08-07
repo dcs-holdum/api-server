@@ -2,6 +2,7 @@ import User from "../models/User";
 import History from "../models/History";
 import AttendanceHistory from "../models/AttendanceHistory";
 import { getLastElementOfArray } from "../lib/list";
+import { httpStatusCodes } from "../lib/https-status-codes";
 
 export const getAttendance = (req, res) => {
   return res.send("Developing... getAttendance");
@@ -14,7 +15,7 @@ export const getCheckAttendance = async (req, res) => {
 
   const isExists = await User.exists({ username });
 
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   const userInfo = await User.findById(isExists["_id"]).populate({
     path: "history",
@@ -48,7 +49,7 @@ export const postStampAttendance = async (req, res) => {
 
   const isExists = await User.exists({ username });
 
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   const userInfo = await User.findById(isExists["_id"]).populate({
     path: "history",
@@ -73,12 +74,12 @@ export const postStampAttendance = async (req, res) => {
         }
       });
 
-      return res.sendStatus(201);
+      return res.sendStatus(httpStatusCodes.CREATED);
     } catch (error) {
       console.log(`SERVER_ERROR : ${error}`);
-      return res.sendStatus(400);
+      return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
     }
   } else {
-    return res.sendStatus(409);
+    return res.sendStatus(httpStatusCodes.CONFLICT);
   }
 };
