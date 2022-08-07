@@ -2,6 +2,7 @@ import User from "../models/User";
 import History from "../models/History";
 import GamblingHistory from "../models/GablingHistory";
 import { increaseByPercentage } from "../lib/random";
+import { httpStatusCodes } from "../lib/https-status-codes";
 
 export const getGabling = (_, res) => {
   return res.send("Developing... getGabling");
@@ -14,7 +15,7 @@ export const getCheckGambling = async (req, res) => {
 
   const isExists = await User.exists({ username });
 
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   const userInfo = await User.findById(isExists["_id"]).populate({
     path: "history",
@@ -35,12 +36,12 @@ export const postGambling = async (req, res) => {
 
   const isExists = await User.exists({ username });
 
-  if (!isExists) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
   const userInfo = await User.findById(isExists["_id"]);
 
   if (bettingMoney > userInfo.money) {
-    return res.sendStatus(403);
+    return res.sendStatus(httpStatusCodes.FORBIDDEN);
   }
 
   const results = increaseByPercentage(
