@@ -63,7 +63,7 @@ export const patchLevelUp = async (req, res) => {
     const createdLevelHistory = await LevelHistory.create({
       spend: need.money,
       from: userInfo.level,
-      to: userInfo.level + isPossible ? 1 : 0,
+      to: userInfo.level + (isPossible ? 1 : 0),
       success: isPossible,
       user: isExist["_id"],
     });
@@ -80,6 +80,8 @@ export const patchLevelUp = async (req, res) => {
       success: isPossible,
       percentage: need.percentage,
       money: need.money,
+      from: createdLevelHistory.from,
+      to: createdLevelHistory.to,
     });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
