@@ -7,10 +7,6 @@ import GamblingHistory from "../models/GablingHistory";
 import { increaseByPercentage } from "../lib/random";
 import { httpStatusCodes } from "../lib/https-status-codes";
 
-export const getGabling = (_, res) => {
-  return res.send("Developing... getGabling");
-};
-
 export const getCheckGambling = async (req, res) => {
   // Grab the variable from the params
   const {

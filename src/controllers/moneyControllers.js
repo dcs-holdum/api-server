@@ -2,10 +2,6 @@
 import User from "../models/User";
 import { httpStatusCodes } from "../lib/https-status-codes";
 
-export const getMoney = (req, res) => {
-  return res.send("Developing... getMoney");
-};
-
 export const getCheckMoney = async (req, res) => {
   // Grab the variable from the params
   const {

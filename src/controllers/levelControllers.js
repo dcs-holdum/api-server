@@ -8,10 +8,6 @@ import { getNeed } from "../lib/level";
 import { getRandomBoolean } from "../lib/random";
 import { httpStatusCodes } from "../lib/https-status-codes";
 
-export const getLevel = (req, res) => {
-  return res.send("Developing... getLevel");
-};
-
 export const getCheckLevel = async (req, res) => {
   // Grab the variable from the params
   const {
@@ -46,8 +42,8 @@ export const patchLevelUp = async (req, res) => {
 
   // Check user exists
   const isExists = await User.exists({ username });
-  if (!isExist) return res.sendStatus(httpStatusCodes.NOT_FOUND);
-  
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
+
   // If user exists, grab all of the User information from the mongoDB
   const userInfo = await User.findById(isExists["_id"]);
 
