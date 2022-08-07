@@ -35,11 +35,11 @@ export const patchLevelUp = async (req, res) => {
     params: { username }
   } = req;
 
-  const isExist = await User.exists({ username });
+  const isExists = await User.exists({ username });
 
-  if (!isExist) return res.sendStatus(404);
+  if (!isExists) return res.sendStatus(404);
 
-  const userInfo = await User.findById(isExist["_id"]);
+  const userInfo = await User.findById(isExists["_id"]);
 
   try {
     const need = getNeed(userInfo.level);
@@ -65,7 +65,7 @@ export const patchLevelUp = async (req, res) => {
       from: userInfo.level,
       to: userInfo.level + (isPossible ? 1 : 0),
       success: isPossible,
-      user: isExist["_id"],
+      user: isExists["_id"],
     });
 
     await History.findByIdAndUpdate(userInfo.history["_id"], {
