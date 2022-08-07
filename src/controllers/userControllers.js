@@ -33,7 +33,9 @@ export const postCreateUser = async (req, res) => {
 
     await createdUser.update({ history: userHistory["_id"] });
 
-    return res.sendStatus(201);
+    return res.json({
+      createdUser,
+    });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
     return res.sendStatus(400);
@@ -51,7 +53,9 @@ export const deleteUser = async (req, res) => {
 
   try {
     await User.findByIdAndDelete(isExsits["_id"]);
-    return res.sendStatus(204);
+    return res.json({
+      deleteUser,
+    });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
     return res.sendStatus(400);

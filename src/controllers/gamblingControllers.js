@@ -48,30 +48,35 @@ export const postGambling = async (req, res) => {
     bettingMoney
   );
 
-  await User.findByIdAndUpdate(userInfo["_id"], {
-    $inc: {
-      money: results.money,
-    },
-  });
+  try {
+    await User.findByIdAndUpdate(userInfo["_id"], {
+      $inc: {
+        money: results.money,
+      },
+    });
 
-  const createdGamblingHistory = await GamblingHistory.create({
-    spend: bettingMoney,
-    earn: results.money - bettingMoney,
-    percentage: results.percentage,
-    success: results.isWin,
-    user: userInfo["_id"],
-  });
+    const createdGamblingHistory = await GamblingHistory.create({
+      spend: bettingMoney,
+      earn: results.money - bettingMoney,
+      percentage: results.percentage,
+      success: results.isWin,
+      user: userInfo["_id"],
+    });
 
-  await History.findByIdAndUpdate(userInfo.history["_id"], {
-    $push: {
-      gambling: createdGamblingHistory["_id"],
-    },
-  });
+    await History.findByIdAndUpdate(userInfo.history["_id"], {
+      $push: {
+        gambling: createdGamblingHistory["_id"],
+      },
+    });
 
-  return res.json({
-    time: createdGamblingHistory.time,
-    money: createdGamblingHistory.spend,
-    earn: createdGamblingHistory.earn,
-    percentage: createdGamblingHistory.percentage,
-  });
+    return res.json({
+      time: createdGamblingHistory.time,
+      money: createdGamblingHistory.spend,
+      earn: createdGamblingHistory.earn,
+      percentage: createdGamblingHistory.percentage,
+    });
+  } catch (error) {
+    console.log(`SERVER_ERROR : ${error}`);
+    return res.sendStatus(400);
+  }
 };
