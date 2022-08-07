@@ -8,6 +8,7 @@ import "./models/User";
 import "./models/History";
 import "./models/AttendanceHistory";
 import "./models/LevelHistory";
+import "./models/GablingHistory";
 
 const PORT = process.env.PORT || 4000;
 

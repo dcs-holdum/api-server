@@ -16,6 +16,11 @@ const historySchema = new mongoose.Schema({
     required: true,
     ref: "LevelHistory",
   }],
+  gambling: [{
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "GamblingHistory",
+  }],
 });
 
 const History = mongoose.model("History", historySchema);

@@ -6,7 +6,8 @@ export function getRandomBoolean(percentage) {
   return Math.random() < percentage / 100;
 };
 
-export function increaseByPercentage(percentage, money) {
+export function increaseByPercentage(minPercentage, money) {
+  const percentage = getRandomInteger(1, minPercentage, true);
   const isWin = getRandomBoolean(percentage);
   let increasePercentage;
 
@@ -18,6 +19,7 @@ export function increaseByPercentage(percentage, money) {
 
   return {
     isWin,
-    money: money * increasePercentage,
+    percentage,
+    money: money * (increasePercentage / 100),
   };
 };
