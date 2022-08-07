@@ -14,5 +14,8 @@ const attendanceHistorySchema = new mongoose.Schema({
   },
 });
 
-const AttendanceHistory = mongoose.model("AttendanceHistory", attendanceHistorySchema);
+const AttendanceHistory = mongoose.model(
+  "AttendanceHistory",
+  attendanceHistorySchema
+);
 export default AttendanceHistory;

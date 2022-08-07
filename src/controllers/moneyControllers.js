@@ -7,23 +7,18 @@ export const getMoney = (req, res) => {
 
 export const getCheckMoney = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExists = await User.exists({ username });
 
   if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
 
-  try {
-    const userInfo = await User.findById(isExists["_id"], { money: true });
+  const userInfo = await User.findById(isExists["_id"], { money: true });
 
-    return res.json({
-      money: userInfo.money,
-    })
-  } catch (error) {
-    console.log(`SERVER_ERROR : ${error}`);
-    return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
-  }
+  return res.json({
+    money: userInfo.money,
+  });
 };
 
 export const patchEarnMoney = async (req, res) => {
@@ -40,10 +35,9 @@ export const patchEarnMoney = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(isExists["_id"], {
       $inc: {
         money,
-      }
+      },
     });
 
-    console.log(updatedUser);
     return res.json({
       past: updatedUser.money - money,
       now: updatedUser.money,
@@ -69,10 +63,9 @@ export const patchLoseMoney = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(isExists["_id"], {
       $inc: {
         money: -money,
-      }
+      },
     });
 
-    console.log(updatedUser);
     return res.json({
       past: updatedUser.money - money,
       now: updatedUser.money,

@@ -4,7 +4,7 @@ import { httpStatusCodes } from "../lib/https-status-codes";
 
 export const getUser = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExsits = await User.exists({ username });
@@ -14,13 +14,13 @@ export const getUser = async (req, res) => {
   const foundedUser = await User.findById(isExsits["_id"]).populate("history");
 
   return res.json({
-    user: foundedUser
+    user: foundedUser,
   });
-}
+};
 
 export const postCreateUser = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExsits = await User.exists({ username });
@@ -34,7 +34,9 @@ export const postCreateUser = async (req, res) => {
 
     await createdUser.update({ history: userHistory["_id"] });
 
-    return res.sendStatus(httpStatusCodes.CREATED);
+    return res.json({
+      created: true,
+    });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
     return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
@@ -43,7 +45,7 @@ export const postCreateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExsits = await User.exists({ username });
@@ -52,9 +54,12 @@ export const deleteUser = async (req, res) => {
 
   try {
     await User.findByIdAndDelete(isExsits["_id"]);
-    return res.sendStatus(httpStatusCodes.DELETED);
+
+    return res.json({
+      deleted: true,
+    });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
     return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
   }
-}
+};

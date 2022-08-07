@@ -10,7 +10,7 @@ export const getAttendance = (req, res) => {
 
 export const getCheckAttendance = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExists = await User.exists({ username });
@@ -21,7 +21,7 @@ export const getCheckAttendance = async (req, res) => {
     path: "history",
     populate: {
       path: "attendance",
-    }
+    },
   });
 
   const currentDate = new Date();
@@ -39,12 +39,12 @@ export const getCheckAttendance = async (req, res) => {
   return res.json({
     today,
     history: userInfo.history.attendance.reverse(),
-  })
+  });
 };
 
 export const postStampAttendance = async (req, res) => {
   const {
-    params: { username }
+    params: { username },
   } = req;
 
   const isExists = await User.exists({ username });
@@ -54,7 +54,7 @@ export const postStampAttendance = async (req, res) => {
   const userInfo = await User.findById(isExists["_id"]).populate({
     path: "history",
     populate: {
-      path: "attendance"
+      path: "attendance",
     },
   });
 
@@ -66,12 +66,14 @@ export const postStampAttendance = async (req, res) => {
 
   if (!lastHistoryDate || currentDay !== lastHistoryDay) {
     try {
-      const createdStamp = await AttendanceHistory.create({ user: isExists["_id"] });
+      const createdStamp = await AttendanceHistory.create({
+        user: isExists["_id"],
+      });
 
       await History.findByIdAndUpdate(userInfo.history["_id"], {
         $push: {
           attendance: createdStamp["_id"],
-        }
+        },
       });
 
       return res.sendStatus(httpStatusCodes.CREATED);

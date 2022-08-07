@@ -1,7 +1,11 @@
 import express from "express";
 
 // Import Controllers and Middlewares
-import { getGabling, getCheckGambling, postGambling } from "../controllers/gamblingControllers";
+import {
+  getGabling,
+  getCheckGambling,
+  postGambling,
+} from "../controllers/gamblingControllers";
 
 const gamblingRouter = express.Router();
 
