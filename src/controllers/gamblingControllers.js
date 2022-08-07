@@ -86,7 +86,7 @@ export const postGambling = async (req, res) => {
 
     // Return json
     // Ref) https://github.com/dcs-holdum/.github/blob/master/docs/API_EXAMPLE/GAMBLING/GAMBLING.json
-    return res.json({
+    return res.status(httpStatusCodes.CREATED).json({
       time: createdGamblingHistory.time,
       money: createdGamblingHistory.spend,
       earn: createdGamblingHistory.earn,
@@ -94,6 +94,6 @@ export const postGambling = async (req, res) => {
     });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
-    return res.sendStatus(400);
+    return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
   }
 };

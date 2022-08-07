@@ -46,8 +46,8 @@ export const patchLevelUp = async (req, res) => {
 
   // Check user exists
   const isExists = await User.exists({ username });
-  if (!isExist) return res.sendStatus(httpStatusCodes.NOT_FOUND);
-  
+  if (!isExists) return res.sendStatus(httpStatusCodes.NOT_FOUND);
+
   // If user exists, grab all of the User information from the mongoDB
   const userInfo = await User.findById(isExists["_id"]);
 
@@ -92,7 +92,7 @@ export const patchLevelUp = async (req, res) => {
 
     // Return json
     // Ref) https://github.com/dcs-holdum/.github/blob/master/docs/API_EXAMPLE/LEVEL/UP.json
-    return res.json({
+    return res.status(httpStatusCodes.CREATED).json({
       time: new Date().now,
       level: userInfo.level + isPossible ? 1 : 0,
       success: isPossible,

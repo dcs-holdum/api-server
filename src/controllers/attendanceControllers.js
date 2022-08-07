@@ -92,10 +92,14 @@ export const postStampAttendance = async (req, res) => {
         },
       });
 
-      return res.sendStatus(httpStatusCodes.CREATED);
+      return res.status(httpStatusCodes.CREATED).json({
+        stamped: true,
+      });
     } catch (error) {
       console.log(`SERVER_ERROR : ${error}`);
-      return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
+      return res.status(httpStatusCodes.BAD_GATEWAY).json({
+        stamped: false,
+      });
     }
   } else {
     return res.sendStatus(httpStatusCodes.CONFLICT);

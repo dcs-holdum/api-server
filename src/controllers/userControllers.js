@@ -45,7 +45,7 @@ export const postCreateUser = async (req, res) => {
 
     // Return json
     // Ref) https://github.com/dcs-holdum/.github/blob/master/docs/API_EXAMPLE/USER/CREATE.json
-    return res.json({
+    return res.status(httpStatusCodes.CREATED).json({
       created: true,
     });
   } catch (error) {
@@ -70,11 +70,13 @@ export const deleteUser = async (req, res) => {
 
     // Return json
     // Ref) https://github.com/dcs-holdum/.github/blob/master/docs/API_EXAMPLE/USER/DELETE.json
-    return res.json({
+    return res.status(httpStatusCodes.DELETED).json({
       deleted: true,
     });
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
-    return res.sendStatus(httpStatusCodes.BAD_GATEWAY);
+    return res.status(httpStatusCodes.BAD_GATEWAY).json({
+      deleted: false
+    });
   }
 };
