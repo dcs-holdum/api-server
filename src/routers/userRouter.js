@@ -1,12 +1,11 @@
 import express from "express";
 
 // Import Controllers and Middlewares
-import { deleteUser, getUser, postCreateUser } from "../controllers/userControllers";
+import { getUser, postCreateUser, deleteUser } from "../controllers/userControllers";
 
 const userRouter = express.Router();
 
 // Routeing
-userRouter.route("/").post(postCreateUser).delete(deleteUser);
-userRouter.route("/:username").get(getUser);
+userRouter.route("/:username").get(getUser).post(postCreateUser).delete(deleteUser);
 
 export default userRouter;
