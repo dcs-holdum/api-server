@@ -7,10 +7,6 @@ import AttendanceHistory from "../models/AttendanceHistory";
 import { getLastElementOfArray } from "../lib/list";
 import { httpStatusCodes } from "../lib/https-status-codes";
 
-export const getAttendance = (req, res) => {
-  return res.send("Developing... getAttendance");
-};
-
 export const getCheckAttendance = async (req, res) => {
   // Grab the variable from the params
   const {
