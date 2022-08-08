@@ -13,7 +13,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 
 // Import Middlewares
-import { localsMiddleware } from "./middlewares";
+import { checkKeyMiddleware, localsMiddleware } from "./middlewares";
 
 // Create Server Application
 const app = express();
@@ -47,6 +47,7 @@ app.use((_, res, next) => {
 
 // Routing
 app.use(localsMiddleware);
+app.use(checkKeyMiddleware);
 app.use("/", rootRouter);
 app.use("/user", userRouter);
 app.use("/attendance", attendanceRouter);
