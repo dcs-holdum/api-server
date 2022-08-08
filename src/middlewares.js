@@ -7,7 +7,7 @@ export const localsMiddleware = (req, res, next) => {
 
 export const checkKeyMiddleware = async (req, res, next) => {
   const {
-    body: { apiKey }
+    body: { apiKey },
   } = req;
 
   if (!apiKey || apiKey !== process.env.API_KEY) {
@@ -18,4 +18,3 @@ export const checkKeyMiddleware = async (req, res, next) => {
 
   next();
 };
-

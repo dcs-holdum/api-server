@@ -76,7 +76,7 @@ export const deleteUser = async (req, res) => {
   } catch (error) {
     console.log(`SERVER_ERROR : ${error}`);
     return res.status(httpStatusCodes.BAD_GATEWAY).json({
-      deleted: false
+      deleted: false,
     });
   }
 };
