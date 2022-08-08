@@ -88,7 +88,7 @@ export const patchLevelUp = async (req, res) => {
 
     // Return json
     // Ref) https://github.com/dcs-holdum/.github/blob/master/docs/API_EXAMPLE/LEVEL/UP.json
-    return res.json({
+    return res.status(httpStatusCodes.CREATED).json({
       time: new Date().now,
       level: userInfo.level + isPossible ? 1 : 0,
       success: isPossible,
