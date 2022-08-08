@@ -7,12 +7,12 @@ export const localsMiddleware = (req, res, next) => {
 
 export const checkKeyMiddleware = async (req, res, next) => {
   const {
-    body: { verifyKey }
+    body: { apiKey }
   } = req;
 
-  if (!verifyKey || verifyKey !== process.env.VERIFY_KEY) {
+  if (!apiKey || apiKey !== process.env.API_KEY) {
     return res.sendStatus(httpStatusCodes.UNAUTHORIZED);
-  } else if (verifyKey === process.env.VERIFY_KEY) {
+  } else if (apiKey === process.env.API_KEY) {
     next();
   }
 
