@@ -2,7 +2,7 @@
   "name": "api-server",
   "version": "1.0.0",
   "description": "The API Server of DCS Holdum",
-  "main": "index.js",
+  "main": "./src/init.js",
   "repository": "git@github.com:dcs-holdum/api-server.git",
   "author": "craftz-cat<craftzcat.ss@gmail.com>",
   "license": "MIT",
