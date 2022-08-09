@@ -60,8 +60,8 @@ export const postGambling = async (req, res) => {
     // Increase the money of the user
     await User.findByIdAndUpdate(userInfo["_id"], {
       $inc: {
-        money: results.money,
-      },
+        money: results.money - bettingMoney
+      }
     });
 
     // Create Gambling History
