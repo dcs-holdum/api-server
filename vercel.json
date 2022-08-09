@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "../src/"
+    }
+  ],
+  "routes": [
+    {
+      "src": "./src/(.*)",
+      "dest": "/"
+    }
+  ]
+}
