@@ -2,14 +2,15 @@
   "name": "api-server",
   "version": "1.0.0",
   "description": "The API Server of DCS Holdum",
-  "main": "index.js",
+  "main": "./src/init.js",
   "repository": "git@github.com:dcs-holdum/api-server.git",
   "author": "craftz-cat<craftzcat.ss@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "node build/init.js",
     "build": "babel src -d build",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "format": "prettier --write . && eslint src/**/*.js --fix"
   },
   "dependencies": {
     "babel-loader": "^8.2.5",
@@ -28,6 +29,11 @@
     "@babel/core": "^7.18.10",
     "@babel/node": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
-    "nodemon": "^2.0.19"
+    "eslint": "^8.21.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1",
+    "pretty-quick": "^3.1.3"
   }
 }
