@@ -1,3 +1,3 @@
 # DCS Holdum API Server
 
-This branch is DEVELOP version branch.
+This is API Server of DCS Holdum
